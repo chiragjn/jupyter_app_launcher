@@ -49,7 +49,7 @@ async function activate(
 
   function createCommand(config: ILauncherConfiguration, idx: number): void {
     let icon: LabIcon;
-    console.log(`Creating command for config ${config}`);
+    console.log(`Creating command for config ${JSON.stringify(config)}`);
     if (config.icon) {
       icon = iconFromSvgString(config.icon);
     } else {
