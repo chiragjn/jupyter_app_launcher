@@ -8,9 +8,6 @@ import { IDict, IPanelFactory } from '../../token';
 export class NotebookFactory implements IPanelFactory {
   constructor(private options: NotebookFactory.IOptions) {}
   async create(config: ILauncherConfiguration, args: IDict): Promise<void> {
-    if (!config.sourceCode) {
-      return;
-    }
     const app = this.options.app;
     if (config.copy === false) {
       const doc: NotebookPanel = await app.commands.execute('docmanager:open', {
@@ -21,6 +18,9 @@ export class NotebookFactory implements IPanelFactory {
       await doc.sessionContext.ready;
       doc.content.activeCellIndex = 1;
     } else {
+      if (!config.sourceCode) {
+        return;
+      }
       const cwd = args['cwd'];
       const model: Contents.IModel = await app.commands.execute(
         'docmanager:new-untitled',
