@@ -10,6 +10,9 @@ export class NotebookFactory implements IPanelFactory {
   async create(config: ILauncherConfiguration, args: IDict): Promise<void> {
     const app = this.options.app;
     if (config.copy === false) {
+      await app.commands.execute('filebrowser:go-to-path', {
+        path: config.source,
+      });
       const doc: NotebookPanel = await app.commands.execute('docmanager:open', {
         path: config.source,
         factory: 'Notebook',
